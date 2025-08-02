@@ -1,0 +1,49 @@
+class rectangle():
+
+  def __init__(self, center, a, b):
+    self.center = center
+    self.a = a
+    self.b = b
+
+  def points(self):
+      points_list = [
+          Point(self.center.x + self.a / 2, self.center.y + self.b / 2, self.center.z),
+          Point(self.center.x + self.a / 2, self.center.y - self.b / 2, self.center.z),
+          Point(self.center.x - self.a / 2, self.center.y - self.b / 2, self.center.z),
+          Point(self.center.x - self.a / 2, self.center.y + self.b / 2, self.center.z)
+      ]
+      return points_list
+
+  def __repr__(self):
+    return f"rectangle(center = {self.center}, a = {self.a}, b = {self.b})"
+
+rec = rectangle(center, 10, 10)
+print(rec)
+
+
+#visualize
+
+def visualize(rectangle):
+  fig = plt.figure(figsize = (5, 5))
+  ax = fig.add_subplot(111, projection = '3d')
+
+  points = rectangle.points()
+  points.append(points[0])
+
+  xs = [p.x for p in points]
+  ys = [p.y for p in points]
+  zs = [p.z for p in points]
+
+  ax.plot(xs, ys, zs, color='black', linewidth = 2)
+
+  ax.scatter(xs, ys, zs, color = 'red')
+
+  ax.set_xlabel('X')
+  ax.set_ylabel('Y')
+  ax.set_zlabel('Z')
+  ax.set_title('Square')
+  ax.legend()
+  plt.show()
+
+
+visualize(rec)
