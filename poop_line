@@ -1,0 +1,54 @@
+class Point():
+
+  def __init__(self, x, y, z):
+    self.x = x
+    self.y = y
+    self.z = z
+
+  def __repr__(self):
+    return f"Point(x = {self.x}, y = {self.y}, z = {self.z})"
+
+p1 = Point(0, 0, 0)
+p2 = Point(4, 5, 10)
+
+class line():
+
+  def __init__(self, a, b):
+    self.a = a
+    self.b = b
+
+  def length(self):
+    x1, y1, z1 = self.a.x, self.a.y, self.a.z
+    x2, y2, z2 = self.b.x, self.b.y, self.b.z
+    len = math.sqrt((x2-x1)**2 + (y2-y1)**2 + (z2-z1)**2)
+    return len
+
+  def __repr__(self):
+    return f"line(a = {self.a}, b = {self.b})"
+
+
+lin = line(p1, p2)
+
+def visualize(line):
+
+    fig = plt.figure(figsize = (5, 5))
+    ax = fig.add_subplot(111, projection = '3d')
+
+    x_val = [line.a.x, line.b.x]
+    y_val = [line.a.y, line.b.y]
+    z_val = [line.a.z, line.b.z]
+
+    ax.plot(x_val, y_val, z_val, color = 'black', linewidth=2)
+
+    ax.scatter(line.a.x, line.a.y, line.a.z, color='red', s=50, label='Start Point ()')
+    ax.scatter(line.b.x, line.b.y, line.b.z, color='green', s=50, label='End Point')
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('Line')
+    ax.legend()
+    plt.show()
+
+
+visualize(lin)
