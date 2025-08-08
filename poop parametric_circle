@@ -1,3 +1,19 @@
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+
+"""implicit form
+
+x^2 + y^2 =  r^2
+
+"""
+
+"""parametric form
+
+C(u) = (x(u), y(u)) ; u = [0, 2pi]
+
+"""
+
 class circle():
 
   def __init__(self, r, u_steps):
