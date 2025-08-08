@@ -1,0 +1,52 @@
+"""implicit form of a sphere
+
+f(x, y, z) = 0
+x^2 + y^2 +z^2 = r^2
+
+"""
+
+"""parametric form of a sphere
+
+S(u, v) = (x(u, v), y(u, v), z(u, v))
+x(u, v) = sin(u)cos(v)
+y(u, v) = sin(u)sin(v)
+z(u, v) = cos(u)
+
+"""
+
+class Sphere():
+  def __init__(self, r, center, u_steps, v_steps):
+    self.r = r
+    self.center = center
+    self.u_steps = u_steps
+    self.v_steps = v_steps
+
+  def S(self):
+    u = np.linspace(0, np.pi, self.u_steps)
+    v = np.linspace(0, 2 * np.pi, self.v_steps) # v should go from 0 to pi for a sphere
+    u, v = np.meshgrid(u, v)
+    x = self.center.x + self.r * np.sin(u)*np.cos(v)
+    y = self.center.y + self.r * np.sin(u)*np.sin(v)
+    z = self.center.z + self.r * np.cos(u)
+    return x, y, z
+
+  def __repr__(self):
+    return f"Sphere(r = {self.r}, center = {self.center}, u_steps = {self.u_steps}, v_steps = {self.v_steps})"
+
+def visualize_sphere(sphere):
+  x_vall, y_vall, z_vall = sphere.S()
+
+  fig = plt.figure(figsize=(7, 7))
+  ax = fig.add_subplot(111, projection = '3d')
+  ax.plot_surface(x_vall, y_vall, z_vall, color = 'blue', label = 'Sphere', alpha = 0.6) # Use plot_surface
+  ax.scatter([sphere.center.x], [sphere.center.y], [sphere.center.z], color = 'red', s = 50, label = 'Center')
+  plt.title("Parametric Sphere")
+  ax.set_xlabel("X")
+  ax.set_ylabel("Y")
+  ax.set_zlabel("Z")
+  # ax.legend() # legend is not supported for plot_surface
+  plt.show()
+
+s = Sphere(10, Point(0, 0, 0), 100, 100)
+
+visualize_sphere(s)
