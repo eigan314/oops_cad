@@ -1,0 +1,29 @@
+class circle():
+
+  def __init__(self, r, u_steps):
+    self.u_steps = u_steps
+    self.r = r
+
+  def C(self):
+      u = np.linspace(0, 2 * np.pi, self.u_steps)
+      x = self.r * np.cos(u)
+      y = self.r * np.sin(u)
+      return x, y
+
+  def __repr__(self):
+    return f"circle(r = {self.r}, u = {self.u})"
+
+
+parametric_circle = circle(10, 100)
+x, y = parametric_circle.C()
+
+def visualize_parametric(circle):
+  x_val, y_val = circle.C()
+
+  fig = plt.figure(figsize = (7, 7))
+  ax = fig.add_subplot(111, projection = '3d')
+  ax.plot(x_val, y_val, zs=0, color = 'blue', linewidth = 2)
+  plt.axis('equal')
+  plt.show()
+
+visualize_parametric(parametric_circle)
