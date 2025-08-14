@@ -1,0 +1,79 @@
+"""Power basis curve
+
+C(u) = (x(u), y(u), z(u)) = sum(a*u^i)      0 < u < 1
+
+
+x(u) = sum(x*u^i)
+y(u) = sum(y*u^i)
+z(u) = sum(z*u^i)
+
+C(u) = [a0 a1 a2...... an]*[1        =  [ai]^T * [u^i]
+                            u
+                            u^2
+                            .
+                            .
+                            .
+                            u^n]
+
+"""
+
+import matplotlib.pyplot as plt
+import random as rand
+import numpy as np
+
+n = 10
+def power_basis(a, u): # u should be the variable, not initialized as 0
+  C = 0  # Initialize C to 0 before summing
+  u = np.linspace(0, 1, n)
+  for i in range(n): # Iterate from i = 0 to n-1
+    C += a[i] * (u)**i # Multiply coefficient by u raised to the power of i
+  return C
+
+# Example usage with a list of coefficients
+coefficients =  np.random.rand(n)
+u = np.linspace(0, 1, n)
+degree = len(coefficients) # Degree is n-1, where n is the number of coefficients
+result = power_basis(coefficients, degree)
+print(result)
+
+class PowerBasisCurve():
+
+  def __init__(self, coefficients):
+    self.coefficients = coefficients
+    self.n = len(coefficients) - 1
+
+  def horner1(self, u0):
+        C = self.coefficients[self.n]
+        for i in range(self.n - 1, -1, -1):
+            C = C * u0 + self.coefficients[i]
+        return C
+
+  def __repr__(self):
+        return f"PowerBasisCurve(coefficients = {self.coefficients}, n = {self.n})"
+
+
+coeff = [2, 5, 3]
+u_values = np.linspace(0, 1, 100)
+pbc = PowerBasisCurve(coeff)
+C_values = [pbc.horner1(u) for u in u_values]
+
+u_values
+
+len(coeff)
+
+def visualize(u_value, C_values):
+
+  u_values = np.linspace(0, 1, 100)
+  fig = plt.figure(figsize = (7, 7))
+
+  z_values = np.zeros_like(u_values)
+
+  ax = fig.add_subplot(111, projection = '3d')
+  ax.plot(u_value, C_values, z_values, color ='blue')
+  ax.set_label("X")
+  ax.set_ylabel("Y")
+  ax.set_zlabel("Z")
+  ax.set_title("Power Basis Curve")
+  plt.show()
+
+visualize(u_values, C_values)
